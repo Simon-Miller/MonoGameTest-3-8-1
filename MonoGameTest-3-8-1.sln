@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGameTest-3-8-1", "MonoGameTest-3-8-1\MonoGameTest-3-8-1.csproj", "{893D9B23-BC7B-4365-8954-CF4DF31D33CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C18CE208-16AE-4A87-B804-C92965909D18}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{893D9B23-BC7B-4365-8954-CF4DF31D33CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{893D9B23-BC7B-4365-8954-CF4DF31D33CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{893D9B23-BC7B-4365-8954-CF4DF31D33CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{893D9B23-BC7B-4365-8954-CF4DF31D33CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C78FA372-7C40-4677-9D27-299E3CDAB993}
+	EndGlobalSection
+EndGlobal
