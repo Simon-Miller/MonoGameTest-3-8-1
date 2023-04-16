@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+﻿using System.Text;
 
 namespace Graphics
 {
@@ -24,7 +24,7 @@ namespace Graphics
             if (fill)
             {
                 var lastY = y + height - 1;
-                for (var yy = y; yy < lastY; yy++)
+                for (var yy = y; yy <= lastY; yy++)
                     HorizontalLineUnClipped(x, yy, width, colour);
             }
             else
@@ -42,7 +42,7 @@ namespace Graphics
         public void HorizontalLineUnClipped(uint x, uint y, uint width, UInt32 colour)
         {
             var offset = (y * wide) + x;
-            var last = offset + wide;
+            var last = offset + width;
 
             for (var i = offset; i < last; i++)
                 bitmap[i] = colour;
@@ -83,6 +83,12 @@ namespace Graphics
             }
         }
 
+        public void Plot(uint x, uint y, uint colour)
+        {
+            var offset = (y * wide) + x;
+            bitmap[offset] = colour;
+        }
+
         public void Line(uint x, uint y, uint x2, uint y2, uint colour)
         {
             double cx = x, cy = y, cx2 = x2, cy2 = y2;
@@ -104,13 +110,20 @@ namespace Graphics
             {
                 // now!  let's draw a line!
 
+                // I remember once seeing a paper about this, where the pint of the pixel is mathematically the centre of a box,
+                // and not the top-left corner.  Therefore, we need to add half a pixel to all coordinates to compensate.
+                cx += 0.5;
+                cy += 0.5;
+                cx2 += 0.5;
+                cy2 += 0.5;
+
                 // what's the ratio of width to height?  For every 1 pixel we move horizontally, how many vertically?
 
                 // as we know cx < cx2
-                var width = (cx2 - cx) + 1;
+                var width = (cx2 - cx);
                 var height = (cy < cy2)
-                    ? (cy2 - cy) + 1
-                    : (cy2 - cy) - 1; // negative height.
+                    ? (cy2 - cy)
+                    : (cy2 - cy); // negative height.
 
                 // If horizontal is longer than vertical, then we want to draw the line along the LONGER length, one pixel at a time.
                 if (width > Math.Abs(height))
@@ -134,7 +147,7 @@ namespace Graphics
                 else
                 {
                     // vertical length is longer.
-                    double plotX = cx, xRatio = height / width;
+                    double plotX = cx, xRatio = (height >= 0)? width / height : width / (0.0 - height);
 
                     if (cy < cy2)
                     {
@@ -172,7 +185,14 @@ namespace Graphics
             }
         }
 
-        // designed for use with Draw() but can be used independently.
+        /// <summary>
+        /// designed for use with Draw() but can be used independently.
+        /// </summary>
+        /// <param name="X"></param>
+        /// <param name="Y"></param>
+        /// <param name="direction">1=up, 2= upRight, 3= right, 4= downRight, 5= down, 6= downLeft, 7= left, 8= upLeft</param>
+        /// <param name="length"></param>
+        /// <param name="colour"></param>
         public void Line(ref int X, ref int Y, byte direction, uint length, uint colour)
         {
             // idiot check as we go, means less code but slower performance.  Still fast as hell, unless you want thousands of lines like this.
@@ -187,12 +207,15 @@ namespace Graphics
                 case 1:
                     do
                     {
+                        var debug = debugHelper(bitmap, 7);
+
+                        Y--;
                         var offset = (Y * this.wide) + X;
                         this.bitmap[offset] = colour;
-                        Y--;
+                        
                         count++;
                         if (Y < 0) done = true;
-                        if (count >= length) done = true;
+                        if (count > length) done = true;
                     }
                     while (!done);
                     break;
@@ -201,14 +224,17 @@ namespace Graphics
                 case 2:
                     do
                     {
-                        var offset = (Y * this.wide) + X;
-                        this.bitmap[offset] = colour;
+                        var debug = debugHelper(bitmap, 7);
+
                         Y--;
                         X++;
+                        var offset = (Y * this.wide) + X;
+                        this.bitmap[offset] = colour;
+                        
                         count++;
                         if (Y < 0) done = true;
                         if (X >= this.wide) done = true;
-                        if (count >= length) done = true;
+                        if (count > length) done = true;
                     }
                     while (!done);
                     break;
@@ -217,12 +243,15 @@ namespace Graphics
                 case 3:
                     do
                     {
+                        var debug = debugHelper(bitmap, 7);
+
+                        X++;
                         var offset = (Y * this.wide) + X;
                         this.bitmap[offset] = colour;
-                        X++;
+                        
                         count++;
                         if (X >= this.wide) done = true;
-                        if (count >= length) done = true;
+                        if (count > length) done = true;
                     }
                     while (!done);
                     break;
@@ -231,14 +260,17 @@ namespace Graphics
                 case 4:
                     do
                     {
-                        var offset = (Y * this.wide) + X;
-                        this.bitmap[offset] = colour;
+                        var debug = debugHelper(bitmap, 7);
+
                         X++;
                         Y++;
+                        var offset = (Y * this.wide) + X;
+                        this.bitmap[offset] = colour;
+                        
                         count++;
                         if (X >= this.wide) done = true;
                         if (Y >= this.high) done = true;
-                        if (count >= length) done = true;
+                        if (count > length) done = true;
                     }
                     while (!done);
                     break;
@@ -247,12 +279,15 @@ namespace Graphics
                 case 5:
                     do
                     {
+                        var debug = debugHelper(bitmap, 7);
+
+                        Y++;
                         var offset = (Y * this.wide) + X;
                         this.bitmap[offset] = colour;
-                        Y++;
+                        
                         count++;
                         if (Y >= this.high) done = true;
-                        if (count >= length) done = true;
+                        if (count > length) done = true;
                     }
                     while (!done);
                     break;
@@ -261,14 +296,17 @@ namespace Graphics
                 case 6:
                     do
                     {
-                        var offset = (Y * this.wide) + X;
-                        this.bitmap[offset] = colour;
+                        var debug = debugHelper(bitmap, 7);
+
                         Y++;
                         X--;
+                        var offset = (Y * this.wide) + X;
+                        this.bitmap[offset] = colour;
+                        
                         count++;
                         if (Y >= this.high) done = true;
                         if (X < 0) done = true;
-                        if (count >= length) done = true;
+                        if (count > length) done = true;
                     }
                     while (!done);
                     break;
@@ -277,12 +315,15 @@ namespace Graphics
                 case 7:
                     do
                     {
+                        var debug = debugHelper(bitmap, 7);
+
+                        X--;
                         var offset = (Y * this.wide) + X;
                         this.bitmap[offset] = colour;
-                        X--;
+                        
                         count++;
                         if (X < 0) done = true;
-                        if (count >= length) done = true;
+                        if (count > length) done = true;
                     }
                     while (!done);
                     break;
@@ -291,14 +332,17 @@ namespace Graphics
                 case 8:
                     do
                     {
-                        var offset = (Y * this.wide) + X;
-                        this.bitmap[offset] = colour;
+                        var debug = debugHelper(bitmap, 7);
+
                         X--;
                         Y--;
+                        var offset = (Y * this.wide) + X;
+                        this.bitmap[offset] = colour;
+                        
                         count++;
                         if (X < 0) done = true;
                         if (Y < 0) done = true;
-                        if (count >= length) done = true;
+                        if (count > length) done = true;
                     }
                     while (!done);
                     break;
@@ -377,6 +421,8 @@ namespace Graphics
 
             var directions = processCommands();
 
+            Plot(x, y, colour); // starting pixel.
+
             foreach (var direction in directions)
             {
                 Line(ref X, ref Y, direction.direction, direction.length, colour);
@@ -390,9 +436,10 @@ namespace Graphics
                 byte direction = 0;
                 uint number = 0;
 
-                for (int i = 0; i < commands.Length; i++)
+                for (int i = 0; i <= commands.Length; i++)
                 {
-                    char chr = commands[i];
+                    char chr = 'x'; // beyond last character means we assume a char that does not exist.  Should cause last Add to list.
+                    if(i < commands.Length) chr = commands[i];
 
                     if (!gotDirection)
                     {
@@ -406,6 +453,7 @@ namespace Graphics
                             case 'f': direction = 4; break;
                             case 'g': direction = 6; break;
                             case 'h': direction = 8; break;
+                            case 'x': break;    // beyond last char.  Need to eXit.
                             default:
                                 throw new NotImplementedException();
                         }
@@ -416,7 +464,7 @@ namespace Graphics
                     {
                         if (char.IsDigit(chr))
                         {
-                            number += 10;
+                            number *= 10;
                             var cNum = (int)chr;
                             cNum -= '0'; // since when was this valid in C# ??  love it!
                             number += (uint)cNum;
@@ -433,6 +481,30 @@ namespace Graphics
 
                 return list;
             }
+        }
+
+        /// <summary>
+        /// call this during debug sessions to make a string we can visualize from a bitmap.
+        /// </summary>
+        private string debugHelper(UInt32[] bitmap, int wide)
+        {
+            var sb = new StringBuilder();
+
+            var col = 0;
+
+            for(int i=0; i< bitmap.Length; i++)
+            {
+                sb.Append( (char)(((int)'0') + bitmap[i]));
+                col++;
+
+                if(col >= wide)
+                {
+                    col = 0;
+                    sb.Append("\r\n");
+                }
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
