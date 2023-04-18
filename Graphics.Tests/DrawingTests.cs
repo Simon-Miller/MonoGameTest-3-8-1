@@ -1,3 +1,4 @@
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Graphics.Tests
 {
@@ -806,6 +807,366 @@ namespace Graphics.Tests
         #region Draw
 
         [TestMethod]
+        public void Draw_u1()
+        {
+            commonDrawTest(canvas => canvas.Draw(2, 2, "u1", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,0,1,0,
+                0,0,1,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_d1()
+        {
+            commonDrawTest(canvas => canvas.Draw(1, 1, "d1", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,1,0,0,
+                0,1,0,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_l1()
+        {
+            commonDrawTest(canvas => canvas.Draw(2, 2, "l1", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,0,0,0,
+                0,1,1,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_r1()
+        {
+            commonDrawTest(canvas => canvas.Draw(1, 1, "r1", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,1,1,0,
+                0,0,0,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_e1()
+        {
+            commonDrawTest(canvas => canvas.Draw(1, 2, "e1", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,0,1,0,
+                0,1,0,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_f1()
+        {
+            commonDrawTest(canvas => canvas.Draw(1, 1, "f1", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,1,0,0,
+                0,0,1,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_g1()
+        {
+            commonDrawTest(canvas => canvas.Draw(2, 1, "g1", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,0,1,0,
+                0,1,0,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_h1()
+        {
+            commonDrawTest(canvas => canvas.Draw(2, 2, "h1", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,1,0,0,
+                0,0,1,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_u2()
+        {
+            commonDrawTest(canvas => canvas.Draw(2, 2, "u2", 0x01), new UInt32[]
+            {
+                0,0,1,0,
+                0,0,1,0,
+                0,0,1,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_d2()
+        {
+            commonDrawTest(canvas => canvas.Draw(1, 1, "d2", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,1,0,0,
+                0,1,0,0,
+                0,1,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_l2()
+        {
+            commonDrawTest(canvas => canvas.Draw(2, 2, "l2", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,0,0,0,
+                1,1,1,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_r2()
+        {
+            commonDrawTest(canvas => canvas.Draw(1, 1, "r2", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,1,1,1,
+                0,0,0,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_e2()
+        {
+            commonDrawTest(canvas => canvas.Draw(1, 2, "e2", 0x01), new UInt32[]
+            {
+                0,0,0,1,
+                0,0,1,0,
+                0,1,0,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_f2()
+        {
+            commonDrawTest(canvas => canvas.Draw(1, 1, "f2", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,1,0,0,
+                0,0,1,0,
+                0,0,0,1,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_g2()
+        {
+            commonDrawTest(canvas => canvas.Draw(2, 1, "g2", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,0,1,0,
+                0,1,0,0,
+                1,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_h2()
+        {
+            commonDrawTest(canvas => canvas.Draw(2, 2, "h2", 0x01), new UInt32[]
+            {
+                1,0,0,0,
+                0,1,0,0,
+                0,0,1,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_u4()
+        {
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(2, 2, "u4", 0x01), new UInt32[]
+            {
+                0,0,1,0,
+                0,0,1,0,
+                0,0,1,0,
+                0,0,0,0,
+            });
+        }
+        
+        [TestMethod]
+        public void Draw_d4()
+        {
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(1, 1, "d4", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,1,0,0,
+                0,1,0,0,
+                0,1,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_l4()
+        {
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(2, 2, "l4", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,0,0,0,
+                1,1,1,0,
+                0,0,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_e4()
+        {
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(1, 2, "e4", 0x01), new UInt32[]
+            {
+                0,0,0,1,
+                0,0,1,0,
+                0,1,0,0,
+                0,0,0,0,
+            });
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(0, 2, "e4", 0x01), new UInt32[]
+            {
+                0,0,1,0,
+                0,1,0,0,
+                1,0,0,0,
+                0,0,0,0,
+            });
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(2, 3, "e4", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,0,0,0,
+                0,0,0,1,
+                0,0,1,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_f4()
+        {
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(1, 1, "f4", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,1,0,0,
+                0,0,1,0,
+                0,0,0,1,
+            });
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(2, 0, "f4", 0x01), new UInt32[]
+            {
+                0,0,1,0,
+                0,0,0,1,
+                0,0,0,0,
+                0,0,0,0,
+            });
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(0, 2, "f4", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,0,0,0,
+                1,0,0,0,
+                0,1,0,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_g4()
+        {
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(1, 0, "g4", 0x01), new UInt32[]
+            {
+                0,1,0,0,
+                1,0,0,0,
+                0,0,0,0,
+                0,0,0,0,
+            });
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(2, 1, "g4", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,0,1,0,
+                0,1,0,0,
+                1,0,0,0,
+            });
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(3, 2, "g4", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,0,0,0,
+                0,0,0,1,
+                0,0,1,0,
+            });
+        }
+
+        [TestMethod]
+        public void Draw_h4()
+        {
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(3, 1, "h4", 0x01), new UInt32[]
+            {
+                0,0,1,0,
+                0,0,0,1,
+                0,0,0,0,
+                0,0,0,0,
+            });
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(2, 2, "h4", 0x01), new UInt32[]
+            {
+                1,0,0,0,
+                0,1,0,0,
+                0,0,1,0,
+                0,0,0,0,
+            });
+            // out of bounds, clipped.
+            commonDrawTest(canvas => canvas.Draw(1, 3, "h4", 0x01), new UInt32[]
+            {
+                0,0,0,0,
+                0,0,0,0,
+                1,0,0,0,
+                0,1,0,0,
+            });
+        }
+
+        private void commonDrawTest(Action<Drawing> code, UInt32[] expectedResult)
+        {
+            // Arrange
+            var bitmap = new UInt32[16]; // should fill with 0's.
+            var canvas = new Drawing(bitmap, wide: 4, high: 4);
+
+            // Act
+            code(canvas);
+
+            // Assert shurican-like shape
+            Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, expectedResult));
+        }
+
+        [TestMethod]
         public void Draw_1()
         {
             // Arrange
@@ -813,7 +1174,7 @@ namespace Graphics.Tests
             var canvas = new Drawing(bitmap, wide: 7, high: 7);
 
             // Act - BOOM!  needed to plot first pixel, then so movement calculations BEFORE rendering next pixel in each direction.
-            canvas.Draw(1, 1, "r1d1u1e1r1f1d1l1r1f1d1g1l1u1dg1l1h1u1r1l1h1u1", 0x01);
+            canvas.Draw(1, 1, "r1d1u1e1r1f1d1l1r1f1d1g1l1u1d1g1l1h1u1r1l1h1u1", 0x01);
 
             // Assert shurican-like shape
             Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, new UInt32[]
@@ -825,6 +1186,71 @@ namespace Graphics.Tests
                 0,1,1,0,1,0,1,
                 0,1,0,0,1,1,0,
                 0,0,1,1,0,0,0
+            }));
+        }
+
+        [TestMethod]
+        public void Draw_2()
+        {
+            // Arrange
+            var bitmap = new UInt32[15]; // should fill with 0's.
+            var canvas = new Drawing(bitmap, wide: 5, high: 3);
+
+            // Act
+            canvas.Draw(1, 1, "r2", 0x01);
+
+            // Assert
+            Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, new UInt32[]
+            {
+                0,0,0,0,0,
+                0,1,1,1,0,
+                0,0,0,0,0
+            }));
+        }
+
+        #endregion
+
+        #region Fill
+
+        [TestMethod]
+        public void Fill_inside()
+        {
+            // Arrange
+            var bitmap = new UInt32[81]; // should fill with 0's.
+            var canvas = new Drawing(bitmap, wide: 9, high: 9);
+
+            /*
+                         
+                   ****  
+                 ***  *  
+                 * * *** 
+                 *  x  *  // middle of this is staring point of fill.
+                 *** * *  // Each fill direction from this point must also turn a corner.
+                  *  *** 
+                  ****   
+                         
+             */
+            canvas.Draw(3, 3, "u2r3d2l1r2d3l2u1d2l3u2r1l2u3r1", colour: 0x01);
+
+            var debug = canvas.debugHelper(bitmap, 9);
+
+            // Act
+            canvas.Fill(4, 4, colour: 0x01);
+
+            debug = canvas.debugHelper(bitmap, 9);
+
+            // Assert
+            Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, new UInt32[]
+            {
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,1,1,1,1,0,0,
+                0,1,1,1,1,1,1,0,0,
+                0,1,1,1,1,1,1,1,0,
+                0,1,1,1,1,1,1,1,0, // middle of this is staring point of fill.
+                0,1,1,1,1,1,1,1,0,
+                0,0,1,1,1,1,1,1,0,
+                0,0,1,1,1,1,0,0,0,
+                0,0,0,0,0,0,0,0,0
             }));
         }
 
