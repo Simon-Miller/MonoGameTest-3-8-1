@@ -1255,5 +1255,144 @@ namespace Graphics.Tests
         }
 
         #endregion
+
+        #region Circle
+
+        [TestMethod]
+        public void Circle_test1()
+        {
+            // Arrange
+            var bitmap = new UInt32[81]; // should fill with 0's.
+            var canvas = new Drawing(bitmap, wide: 9, high: 9);
+
+            // Act
+            canvas.Circle(4, 4, radius: 0, colour: 0x01);
+
+            var debug = canvas.debugHelper(bitmap, wide: 9);
+
+            // Assert
+            Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, new UInt32[]
+            {
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,1,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0
+            }));
+        }
+
+        [TestMethod]
+        public void Circle_test2()
+        {
+            // Arrange
+            var bitmap = new UInt32[81]; // should fill with 0's.
+            var canvas = new Drawing(bitmap, wide: 9, high: 9);
+
+            // Act
+            canvas.Circle(4, 4, radius: 1, colour: 0x01);
+
+            var debug = canvas.debugHelper(bitmap, wide: 9);
+
+            // Assert
+            Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, new UInt32[]
+            {
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,1,0,0,0,0,
+                0,0,0,1,0,1,0,0,0,
+                0,0,0,0,1,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0
+            }));
+        }
+
+        [TestMethod]
+        public void Circle_test3()
+        {
+            // Arrange
+            var bitmap = new UInt32[81]; // should fill with 0's.
+            var canvas = new Drawing(bitmap, wide: 9, high: 9);
+
+            // Act
+            canvas.Circle(4, 4, radius: 2, colour: 0x01);
+
+            var debug = canvas.debugHelper(bitmap, wide: 9);
+
+            // Assert
+            Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, new UInt32[]
+            {
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,1,1,1,0,0,0,
+                0,0,1,0,0,0,1,0,0,
+                0,0,1,0,0,0,1,0,0,
+                0,0,1,0,0,0,1,0,0,
+                0,0,0,1,1,1,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0
+            }));
+        }
+
+        [TestMethod]
+        public void Circle_test4()
+        {
+            // Arrange
+            var bitmap = new UInt32[81]; // should fill with 0's.
+            var canvas = new Drawing(bitmap, wide: 9, high: 9);
+
+            // Act
+            canvas.Circle(4, 4, radius: 3, colour: 0x01);
+
+            var debug = canvas.debugHelper(bitmap, wide: 9);
+
+            // Assert
+            Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, new UInt32[]
+            {
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,1,1,1,0,0,0,
+                0,0,1,0,0,0,1,0,0,
+                0,1,0,0,0,0,0,1,0,
+                0,1,0,0,0,0,0,1,0,
+                0,1,0,0,0,0,0,1,0,
+                0,0,1,0,0,0,1,0,0,
+                0,0,0,1,1,1,0,0,0,
+                0,0,0,0,0,0,0,0,0
+            }));
+        }
+
+        [TestMethod]
+        public void Circle_test5()
+        {
+            // Arrange
+            var bitmap = new UInt32[81]; // should fill with 0's.
+            var canvas = new Drawing(bitmap, wide: 9, high: 9);
+
+            // Act
+            canvas.Circle(4, 4, radius: 4, colour: 0x01);
+
+            var debug = canvas.debugHelper(bitmap, wide: 9);
+
+            // Assert
+            Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, new UInt32[]
+            {
+                0,0,0,1,1,1,0,0,0,
+                0,1,1,0,0,0,1,1,0,
+                0,1,0,0,0,0,0,1,0,
+                1,0,0,0,0,0,0,0,1,
+                1,0,0,0,0,0,0,0,1,
+                1,0,0,0,0,0,0,0,1,
+                0,1,0,0,0,0,0,1,0,
+                0,1,1,0,0,0,1,1,0,
+                0,0,0,1,1,1,0,0,0
+            }));
+        }
+
+        #endregion
     }
 }

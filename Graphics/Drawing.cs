@@ -551,6 +551,235 @@ namespace Graphics
             }
         }
 
+        // see: https://www.geeksforgeeks.org/mid-point-circle-drawing-algorithm/
+        public void Circle1(int x_centre, int y_centre, int radius, UInt32 colour)
+        {
+            void setPixel(int x, int y)
+            {
+                var offset = (y * this.wide) + x;
+                this.bitmap[offset] = colour;
+
+            }
+
+            int x = radius, y = 0;
+
+            var transX = (x + x_centre);
+            var transY = (y + y_centre);
+
+            setPixel(transX, transY);
+
+            // When radius is zero only a single
+            // point will be printed
+
+            if (radius > 0)
+            {
+                transX = (x + x_centre);
+                transY = (-y + y_centre);
+
+                setPixel(transX, transY);
+
+                transX = (y + x_centre);
+                transY = (x + y_centre);
+
+                setPixel(transX, transY);
+
+                transX = (-y + x_centre);
+                transY = (x + y_centre);
+
+                setPixel(transX, transY);
+            }
+
+            int P = 1 - radius;
+
+            while (x > y)
+            {
+                y++;
+
+                // Mid-point is inside or on the perimeter
+                if (P <= 0)
+                    P = P + 2 * y + 1;
+
+                // Mid-point is outside the perimeter
+                else
+                {
+                    x--;
+                    P = P + 2 * y - 2 * x + 1;
+                }
+
+                // All the perimeter points have already
+                // been printed
+                if (x < y)
+                    break;
+
+                transX = (x + x_centre);
+                transY = (y + y_centre);
+
+                setPixel(transX, transY);
+
+                transX = (-x + x_centre);
+                transY = (y + y_centre);
+
+                setPixel(transX, transY);
+
+                transX = (x + x_centre);
+                transY = (-y + y_centre);
+
+                setPixel(transX, transY);
+
+                transX = (-x + x_centre);
+                transY = (-y + y_centre);
+
+                setPixel(transX, transY);
+
+                // If the generated point is on the
+                // line x = y then the perimeter points
+                // have already been printed
+                if (x != y)
+                {
+                    transX = (y + x_centre);
+                    transY = (x + y_centre);
+
+                    setPixel(transX, transY);
+
+                    transX = (-y + x_centre);
+                    transY = (x + y_centre);
+
+                    setPixel(transX, transY);
+
+                    transX = (y + x_centre);
+                    transY = (-x + y_centre);
+
+                    setPixel(transX, transY);
+
+                    transX = (-y + x_centre);
+                    transY = (-x + y_centre);
+
+                    setPixel(transX, transY);
+                }
+            }
+        }
+
+        // https://programmerbay.com/program-to-draw-a-circle-using-midpoint-circle-drawing-algorithm/
+        public void Circle2(int x_mid, int y_mid, int radius, UInt32 colour)
+        {
+            void setPixel(int x, int y)
+            {
+                var offset = (y * this.wide) + x;
+                this.bitmap[offset] = colour;
+
+            }
+
+            int x = 0, y = radius, dp = 1 - radius;
+
+            do
+            {
+                setPixel(x_mid + x, y_mid + y);
+                setPixel(x_mid + y, y_mid + x);
+                setPixel(x_mid - y, y_mid + x);
+                setPixel(x_mid - x, y_mid + y);
+                setPixel(x_mid - x, y_mid - y);
+                setPixel(x_mid - y, y_mid - x);
+                setPixel(x_mid + y, y_mid - x);
+                setPixel(x_mid + x, y_mid - y);
+
+                if (dp < 0)
+                    dp += (2 * x) + 1;
+                else
+                {
+                    y--;
+                    dp += (2 * x) - (2 * y) + 1;
+                }
+
+                x++;
+            }
+            while (y > x);
+        }
+
+        /// <summary>
+        /// home-grown routine for drawing a circle.  I think its fast!  But could be improved?
+        /// </summary>
+        public void Circle_Simon1(int x_mid, int y_mid, int radius, UInt32 colour)
+        {
+            var rSquared = (radius * radius);
+            
+            // setup initial variables.
+            int x = radius, y = 0;
+
+            void setPixel(int px, int py)
+            {
+                var offset = (py * wide) + px;
+                this.bitmap[offset] = colour;
+            }
+
+            // A squared = B squared + C squared.
+            // we can imagine a right-angle triangle where the longest side is what we are calling Radius here.
+            // this simple equation enables us to calculate the length, so we can determine of outside the circle or not,
+            // based on the radius being larger than 'rSquared'.
+            int calcRadiusSquaredFromXY() => (y * y) + (x * x);
+
+            do
+            {
+                setPixel( x + x_mid, -y + y_mid );
+                setPixel( x + x_mid, y + y_mid );
+                setPixel( y + x_mid, x + y_mid );
+                setPixel(-y + x_mid, x + y_mid);
+                setPixel(-y + x_mid, -x + y_mid);
+                setPixel(-x + x_mid, -y + y_mid);
+                setPixel(-x + x_mid, y + y_mid);
+                setPixel(y + x_mid, -x + y_mid);
+
+                y++;
+
+                if(calcRadiusSquaredFromXY() > rSquared)
+                    x--;
+            } 
+            while(y < radius);
+        }
+
+        /// <summary>
+        /// home-grown routine for drawing a circle.  I think its fast!  But could be improved?
+        /// </summary>
+        public void Circle(int x_mid, int y_mid, int radius, UInt32 colour)
+        {
+            double threshold = 0.25;
+
+            double rSquared = ((radius + threshold) * (radius + threshold));
+
+            // setup initial variables.
+            double x = radius, y = 0;
+
+            void setPixel(double px, double py)
+            {
+                var offset = ((int)py * wide) + (int)px;
+                this.bitmap[offset] = colour;
+            }
+
+            // A squared = B squared + C squared.
+            // we can imagine a right-angle triangle where the longest side is what we are calling Radius here.
+            // this simple equation enables us to calculate the length, so we can determine of outside the circle or not,
+            // based on the radius being larger than 'rSquared'.
+            double calcRadiusSquaredFromXY() => (y * y) + (x * x);
+
+            do
+            {
+                setPixel(x + x_mid, -y + y_mid);
+                setPixel(x + x_mid, y + y_mid);
+                setPixel(y + x_mid, x + y_mid);
+                setPixel(-y + x_mid, x + y_mid);
+                setPixel(-y + x_mid, -x + y_mid);
+                setPixel(-x + x_mid, -y + y_mid);
+                setPixel(-x + x_mid, y + y_mid);
+                setPixel(y + x_mid, -x + y_mid);
+
+                y++;
+
+                if (calcRadiusSquaredFromXY() > rSquared)
+                    x--;
+            }
+            while (y < radius);
+        }
+
+
 #if DEBUG
 
         /// <summary>
