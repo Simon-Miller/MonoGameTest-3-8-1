@@ -2,22 +2,21 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.IO;
 
 namespace MonoGameTest_3_8_1
 {
     public class Game1 : Game
     {
         // ---------------------------------
-        const int wide = 640;
-        const int high = 480;
-        const int numPixels = wide * high;
-        const bool isFullScreen = false;
-        const int BALLS = 10;
+        private const int wide = 640;
+        private const int high = 480;
+        private const int numPixels = wide * high;
+        private const bool isFullScreen = false;
+        private const int BALLS = 10;
         // ---------------------------------
 
-        private GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
+        protected GraphicsDeviceManager graphics;
+        protected SpriteBatch spriteBatch;
 
         public Game1()
         {
@@ -35,25 +34,23 @@ namespace MonoGameTest_3_8_1
         {
             // TODO: Add your initialization logic here
             var currentPath = System.IO.Directory.GetCurrentDirectory();
-            this.sprite = Texture2D.FromFile(graphics.GraphicsDevice, "..\\..\\..\\Icon.bmp");
+            sprite = Texture2D.FromFile(graphics.GraphicsDevice, "..\\..\\..\\..\\MonoGameTest-3-8-1\\Icon.bmp");
 
-            this.screen = new Texture2D(graphics.GraphicsDevice, wide, high);
+            screen = new Texture2D(graphics.GraphicsDevice, wide, high);
 
-            this.ballSprite = Texture2D.FromFile(graphics.GraphicsDevice, "..\\..\\..\\cool-ball.png");
-            
+            ballSprite = Texture2D.FromFile(graphics.GraphicsDevice, "..\\..\\..\\..\\MonoGameTest-3-8-1\\cool-ball.png");
 
-            this.setupBalls();
+
+            setupBalls();
 
             base.Initialize();
         }
 
-        Texture2D screen;
-        Vector2 screenPosition = new Vector2(0, 0);
-
-        Texture2D sprite;
-        Vector2 spritePosition = new Vector2(100, 100);
-
-        Texture2D ballSprite;
+        private Texture2D screen;
+        private Vector2 screenPosition = new Vector2(0, 0);
+        private Texture2D sprite;
+        private Vector2 spritePosition = new Vector2(100, 100);
+        private Texture2D ballSprite;
 
         protected override void LoadContent()
         {
@@ -82,10 +79,8 @@ namespace MonoGameTest_3_8_1
             base.Update(gameTime);
         }
 
-
-        Random random = new Random();
-
-        Ball[] balls = new Ball[BALLS];
+        private Random random = new Random();
+        private Ball[] balls = new Ball[BALLS];
 
 
         protected override void Draw(GameTime gameTime)
@@ -96,7 +91,7 @@ namespace MonoGameTest_3_8_1
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            
+
             for (int i = 0; i < balls.Length; i++)
                 spriteBatch.Draw(ballSprite, balls[i].Position, Color.White);
 
@@ -110,7 +105,7 @@ namespace MonoGameTest_3_8_1
         {
             for (int i = 0; i < balls.Length; i++)
             {
-                var position = new Vector2(random.Next(wide - 32), random.Next(high -32));
+                var position = new Vector2(random.Next(wide - 32), random.Next(high - 32));
                 var directionX = (sbyte)(((sbyte)random.Next(1) * 2) - 1);
                 var directionY = (sbyte)(((sbyte)random.Next(1) * 2) - 1);
                 var xSpeed = random.Next(10) + 1;
@@ -127,20 +122,20 @@ namespace MonoGameTest_3_8_1
             }
         }
 
-        const int maxX = wide - 32;
-        const int maxY = high - 32;
+        private const int maxX = wide - 32;
+        private const int maxY = high - 32;
         private void updateBallPosition(Ball ball)
         {
-            if(ball.DirectionY == -1 && ball.Position.Y < 0)
+            if (ball.DirectionY == -1 && ball.Position.Y < 0)
                 ball.DirectionY = 1;
-            
-            if(ball.DirectionY == 1 && ball.Position.Y >= maxY)
+
+            if (ball.DirectionY == 1 && ball.Position.Y >= maxY)
                 ball.DirectionY = -1;
-            
-            if(ball.DirectionX == -1 && ball.Position.X < 0)
+
+            if (ball.DirectionX == -1 && ball.Position.X < 0)
                 ball.DirectionX = 1;
-            
-            if(ball.DirectionX == 1 && ball.Position.X >= maxX)
+
+            if (ball.DirectionX == 1 && ball.Position.X >= maxX)
                 ball.DirectionX = -1;
 
             float newX = ball.Position.X;
@@ -160,7 +155,7 @@ namespace MonoGameTest_3_8_1
         }
     }
 
-    class Ball
+    internal class Ball
     {
         public Vector2 Position;
         public sbyte DirectionX;
