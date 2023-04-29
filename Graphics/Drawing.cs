@@ -279,14 +279,14 @@ namespace Graphics
                 case 5:
                     do
                     {
-                        var debug = debugHelper(bitmap, 7);
+                        var debug = debugHelper(bitmap, 4);
 
                         Y++;
                         var offset = (Y * this.wide) + X;
                         this.bitmap[offset] = colour;
                         
                         count++;
-                        if (Y >= this.high) done = true;
+                        if (Y >= this.high-1) done = true;
                         if (count >= length) done = true;
                     }
                     while (!done);
@@ -439,7 +439,7 @@ namespace Graphics
                 for (int i = 0; i <= commands.Length; i++)
                 {
                     char chr = 'x'; // beyond last character means we assume a char that does not exist.  Should cause last Add to list.
-                    if(i < commands.Length) chr = commands[i];
+                    if (i < commands.Length) chr = commands[i];
 
                     if (!gotDirection)
                     {
@@ -481,6 +481,49 @@ namespace Graphics
 
                 return list;
             }
+        }
+
+        /// <summary>
+        /// home-grown routine for drawing a circle.  I think its fast!  But could be improved?
+        /// </summary>
+        public void Circle(int x_mid, int y_mid, int radius, UInt32 colour)
+        {
+            double threshold = 0.25;
+
+            double rSquared = ((radius + threshold) * (radius + threshold));
+
+            // setup initial variables.
+            double x = radius, y = 0;
+
+            void setPixel(double px, double py)
+            {
+                var offset = ((int)py * wide) + (int)px;
+                this.bitmap[offset] = colour;
+            }
+
+            // A squared = B squared + C squared.
+            // we can imagine a right-angle triangle where the longest side is what we are calling Radius here.
+            // this simple equation enables us to calculate the length, so we can determine of outside the circle or not,
+            // based on the radius being larger than 'rSquared'.
+            double calcRadiusSquaredFromXY() => (y * y) + (x * x);
+
+            do
+            {
+                setPixel(x + x_mid, -y + y_mid);
+                setPixel(x + x_mid, y + y_mid);
+                setPixel(y + x_mid, x + y_mid);
+                setPixel(-y + x_mid, x + y_mid);
+                setPixel(-y + x_mid, -x + y_mid);
+                setPixel(-x + x_mid, -y + y_mid);
+                setPixel(-x + x_mid, y + y_mid);
+                setPixel(y + x_mid, -x + y_mid);
+
+                y++;
+
+                if (calcRadiusSquaredFromXY() > rSquared)
+                    x--;
+            }
+            while (y < radius);
         }
 
         /// <summary>
