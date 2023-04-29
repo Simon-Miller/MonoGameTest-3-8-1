@@ -486,7 +486,7 @@ namespace Graphics
         /// <summary>
         /// call this during debug sessions to make a string we can visualize from a bitmap.
         /// </summary>
-        private string debugHelper(UInt32[] bitmap, int wide)
+        public string debugHelper(UInt32[] bitmap, int wide)
         {
             var sb = new StringBuilder();
 

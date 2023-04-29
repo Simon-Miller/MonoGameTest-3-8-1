@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Graphics.Tests", "Graphics.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{426150BF-19FB-431D-9A35-1E795A2641E9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FIles", "FIles\FIles.csproj", "{FEBA3DE0-20B4-4196-A705-134B68696876}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{426150BF-19FB-431D-9A35-1E795A2641E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{426150BF-19FB-431D-9A35-1E795A2641E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{426150BF-19FB-431D-9A35-1E795A2641E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEBA3DE0-20B4-4196-A705-134B68696876}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEBA3DE0-20B4-4196-A705-134B68696876}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEBA3DE0-20B4-4196-A705-134B68696876}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEBA3DE0-20B4-4196-A705-134B68696876}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

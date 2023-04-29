@@ -11,7 +11,14 @@ namespace Demo
             uint gameWidth = 400;
             uint gameHeight = 320;
 
-            var xxx = new ScreenDisplay(this.graphics, gameWidth, gameHeight);
+            //var xxx = new ScreenDisplay(this.graphics, gameWidth, gameHeight);
         }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+        }
+
+        //override 
     }
 }
