@@ -207,14 +207,14 @@ namespace Graphics
                 case 1:
                     do
                     {
-                        var debug = debugHelper(bitmap, 7);
+                        //var debug = debugHelper(bitmap, 7);
 
                         Y--;
                         var offset = (Y * this.wide) + X;
                         this.bitmap[offset] = colour;
                         
                         count++;
-                        if (Y < 0) done = true;
+                        if (Y <= 0) done = true;
                         if (count >= length) done = true;
                     }
                     while (!done);
@@ -224,7 +224,7 @@ namespace Graphics
                 case 2:
                     do
                     {
-                        var debug = debugHelper(bitmap, 7);
+                        //var debug = debugHelper(bitmap, 4);
 
                         Y--;
                         X++;
@@ -232,8 +232,8 @@ namespace Graphics
                         this.bitmap[offset] = colour;
                         
                         count++;
-                        if (Y < 0) done = true;
-                        if (X >= this.wide) done = true;
+                        if (Y <= 0) done = true;
+                        if (X >= this.wide -1) done = true;
                         if (count >= length) done = true;
                     }
                     while (!done);
@@ -243,7 +243,7 @@ namespace Graphics
                 case 3:
                     do
                     {
-                        var debug = debugHelper(bitmap, 7);
+                        //var debug = debugHelper(bitmap, 7);
 
                         X++;
                         var offset = (Y * this.wide) + X;
@@ -260,7 +260,7 @@ namespace Graphics
                 case 4:
                     do
                     {
-                        var debug = debugHelper(bitmap, 7);
+                        //var debug = debugHelper(bitmap, 4);
 
                         X++;
                         Y++;
@@ -268,8 +268,8 @@ namespace Graphics
                         this.bitmap[offset] = colour;
                         
                         count++;
-                        if (X >= this.wide) done = true;
-                        if (Y >= this.high) done = true;
+                        if (X >= this.wide - 1) done = true;
+                        if (Y >= this.high - 1) done = true;
                         if (count >= length) done = true;
                     }
                     while (!done);
@@ -279,14 +279,14 @@ namespace Graphics
                 case 5:
                     do
                     {
-                        var debug = debugHelper(bitmap, 4);
+                        //var debug = debugHelper(bitmap, 4);
 
                         Y++;
                         var offset = (Y * this.wide) + X;
                         this.bitmap[offset] = colour;
                         
                         count++;
-                        if (Y >= this.high-1) done = true;
+                        if (Y >= this.high - 1) done = true;
                         if (count >= length) done = true;
                     }
                     while (!done);
@@ -296,7 +296,7 @@ namespace Graphics
                 case 6:
                     do
                     {
-                        var debug = debugHelper(bitmap, 7);
+                        //var debug = debugHelper(bitmap, 4);
 
                         Y++;
                         X--;
@@ -304,8 +304,8 @@ namespace Graphics
                         this.bitmap[offset] = colour;
                         
                         count++;
-                        if (Y >= this.high) done = true;
-                        if (X < 0) done = true;
+                        if (Y >= this.high - 1) done = true;
+                        if (X <= 0) done = true;
                         if (count >= length) done = true;
                     }
                     while (!done);
@@ -315,14 +315,14 @@ namespace Graphics
                 case 7:
                     do
                     {
-                        var debug = debugHelper(bitmap, 7);
+                        //var debug = debugHelper(bitmap, 4);
 
                         X--;
                         var offset = (Y * this.wide) + X;
                         this.bitmap[offset] = colour;
                         
                         count++;
-                        if (X < 0) done = true;
+                        if (X <= 0) done = true;
                         if (count >= length) done = true;
                     }
                     while (!done);
@@ -332,7 +332,7 @@ namespace Graphics
                 case 8:
                     do
                     {
-                        var debug = debugHelper(bitmap, 7);
+                        //var debug = debugHelper(bitmap, 4);
 
                         X--;
                         Y--;
@@ -340,8 +340,8 @@ namespace Graphics
                         this.bitmap[offset] = colour;
                         
                         count++;
-                        if (X < 0) done = true;
-                        if (Y < 0) done = true;
+                        if (X <= 0) done = true;
+                        if (Y <= 0) done = true;
                         if (count >= length) done = true;
                     }
                     while (!done);
@@ -358,38 +358,113 @@ namespace Graphics
         /// </summary>
         public void Fill(uint x, uint y, uint colour)
         {
-            // add starting pixel to queue to be painted, and checked for additional paint points.
-            var checks = new Queue<(int x, int y)>();
-            checks.Enqueue(((int)x, (int)y));
+            var paintPoints = new Queue<(uint x, uint y)>();
 
-            void check(int x, int y)
+            UInt32 getPixel(uint x, uint y)
             {
-                // ensure point is inside the clip window.
-                if (x >= 0 && y >= 0 && x < this.wide && y < this.high)
+                var offset = (y * this.wide) + x;
+                return this.bitmap[offset];
+            }
+
+            void setPixel(uint x, uint y)
+            {
+                var offset = (y * this.wide) + x;
+                this.bitmap[offset] = colour;
+            }
+
+            bool lookRight(uint x, uint y)
+            {
+                // guilty, until proven innocent:
+                bool upRight = true;
+                bool right = true;
+                bool bottomRight = true;
+
+                if (x < wide - 1)
                 {
-                    var offset = (y * this.wide) + x;
+                    if (y > 0) upRight = (getPixel(x + 1, y - 1) == colour);
+                    right = (getPixel(x + 1, y) == colour);
+                    if (y < high - 1) bottomRight = (getPixel(x + 1, y + 1) == colour);
+                }
 
-                    if (y > 0 && this.bitmap[offset - this.wide] != colour)
-                        checks!.Enqueue((x, y - 1));
+                if (upRight || right || bottomRight)
+                    addPaintPointsIfNecessary(x, y);
 
-                    if (y < this.high - 1 && this.bitmap[offset + this.wide] != colour)
-                        checks!.Enqueue((x, y + 1));
+                // ok to carry on filling to the right?
+                return right;
+            }
 
-                    if (x < this.wide - 1 && this.bitmap[offset + 1] != colour)
-                        checks!.Enqueue((x + 1, y));
+            bool lookLeft(uint x, uint y)
+            {
+                // guilty, until proven innocent:
+                bool upLeft = true;
+                bool left = true;
+                bool bottomLeft = true;
 
-                    if (x > 0 && this.bitmap[offset - 1] != colour)
-                        checks!.Enqueue((x - 1, y));
+                if (x > 0)
+                {
+                    if (y > 0) upLeft = (getPixel(x - 1, y - 1) == colour);
+                    left = (getPixel(x - 1, y) == colour);
+                    if (y < high - 1) bottomLeft = (getPixel(x - 1, y + 1) == colour);
+                }
+
+                if (upLeft || left || bottomLeft)
+                    addPaintPointsIfNecessary(x, y);
+
+                // ok to carry on filling to the left?
+                return left;
+            }
+
+            void addPaintPointsIfNecessary(uint x, uint y)
+            {
+                var up = (getPixel(x, y - 1) != colour);
+                if (up)
+                    paintPoints.Enqueue((x, y - 1));
+
+                var down = (getPixel(x, y + 1) != colour);
+                if (down)
+                    paintPoints.Enqueue((x, y + 1));
+            }
+
+            bool done = false;
+
+            bool directionIsRight = true;
+
+            uint tempX = x, tempY = y;
+
+            do
+            {
+                setPixel(x, y);
+
+                if (directionIsRight)
+                {
+                    if (lookRight(x, y))
+                    {
+                        directionIsRight = false; // left
+                        x = tempX; y = tempY; // setep to point where we want to look to paint to the left.
+                    }
+                    else
+                        x++;
+                }
+                else
+                {
+                    if (lookLeft(x, y))
+                    {
+                        directionIsRight = true; // back to right 
+
+                        done = (paintPoints.TryDequeue(out var paintPoint) == false);
+                        if (!done)
+                        {
+                            x = paintPoint.x;
+                            y = paintPoint.y;
+                            tempX = x;
+                            tempY = y;
+                        }
+                    }
+                    else
+                        x--;
                 }
             }
-
-            while (checks.TryDequeue(out var point))
-            {
-                var offset = (point.y * this.wide) + x;
-                this.bitmap[offset] = colour; // paint a pixel
-
-                check(point.x, point.y);
-            }
+            while (!done);
         }
 
         /// <summary>

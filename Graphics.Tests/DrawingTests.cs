@@ -643,7 +643,7 @@ namespace Graphics.Tests
             {
                 0,1,0,0,
                 0,1,0,0,
-                0,1,0,0,
+                0,0,0,0,
                 0,0,0,0
             }));
         }
@@ -665,7 +665,7 @@ namespace Graphics.Tests
             {
                 0,0,0,1,
                 0,0,1,0,
-                0,1,0,0,
+                0,0,0,0,
                 0,0,0,0
             }));
         }
@@ -687,7 +687,7 @@ namespace Graphics.Tests
             {
                 0,0,0,0,
                 0,0,0,0,
-                0,1,1,1,
+                0,0,1,1,
                 0,0,0,0
             }));
         }
@@ -708,7 +708,7 @@ namespace Graphics.Tests
             Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, new UInt32[]
             {
                 0,0,0,0,
-                0,1,0,0,
+                0,0,0,0,
                 0,0,1,0,
                 0,0,0,1
             }));
@@ -730,7 +730,7 @@ namespace Graphics.Tests
             Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, new UInt32[]
             {
                 0,0,0,0,
-                0,1,0,0,
+                0,0,0,0,
                 0,1,0,0,
                 0,1,0,0
             }));
@@ -752,7 +752,7 @@ namespace Graphics.Tests
             Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, new UInt32[]
             {
                 0,0,0,0,
-                0,0,1,0,
+                0,0,0,0,
                 0,1,0,0,
                 1,0,0,0
             }));
@@ -774,7 +774,7 @@ namespace Graphics.Tests
             Assert.IsTrue(IEnumerableComparer.DataEqual(bitmap, new UInt32[]
             {
                 0,0,0,0,
-                1,1,1,0,
+                1,1,0,0,
                 0,0,0,0,
                 0,0,0,0
             }));
@@ -797,7 +797,7 @@ namespace Graphics.Tests
             {
                 1,0,0,0,
                 0,1,0,0,
-                0,0,1,0,
+                0,0,0,0,
                 0,0,0,0
             }));
         }
