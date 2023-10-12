@@ -10,6 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\BinaryImporterPipeline\bin\Debug\net7.0\BinaryImporterPipeline.DesktopGL.dll
 
 #---------------------------------- Content ---------------------------------#
 

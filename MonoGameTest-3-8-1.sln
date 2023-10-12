@@ -20,7 +20,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo", "Demo\Demo.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FIles", "FIles\FIles.csproj", "{FEBA3DE0-20B4-4196-A705-134B68696876}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResolutionSelector", "ResolutionSelector\ResolutionSelector.csproj", "{06DC13DD-0414-4996-A80F-61A0E5CB9FCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResolutionSelector", "ResolutionSelector\ResolutionSelector.csproj", "{06DC13DD-0414-4996-A80F-61A0E5CB9FCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinaryImporterPipeline.DesktopGL", "BinaryImporterPipeline\BinaryImporterPipeline.DesktopGL.csproj", "{4D47FF61-4F49-446B-876E-A04E60ECE6BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,10 @@ Global
 		{06DC13DD-0414-4996-A80F-61A0E5CB9FCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06DC13DD-0414-4996-A80F-61A0E5CB9FCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06DC13DD-0414-4996-A80F-61A0E5CB9FCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D47FF61-4F49-446B-876E-A04E60ECE6BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D47FF61-4F49-446B-876E-A04E60ECE6BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D47FF61-4F49-446B-876E-A04E60ECE6BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D47FF61-4F49-446B-876E-A04E60ECE6BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
